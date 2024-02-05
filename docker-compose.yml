@@ -1,0 +1,24 @@
+version: "3"
+services:
+  web:
+    build: ./app
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_USER=citizix_user
+      - POSTGRES_DB=citizix_db
+volumes:
+  mongo-data:
